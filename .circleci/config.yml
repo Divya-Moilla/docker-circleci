@@ -2,7 +2,7 @@ version: 2.1
 executors:
   docker-publisher:
     environment:
-      IMAGE_NAME: jonathancardoso/building-on-ci
+      IMAGE_NAME: divyamoilla/hello-world
     docker:
       - image: circleci/buildpack-deps:stretch
 jobs:
@@ -14,10 +14,10 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t $IMAGE_NAME:latest .
+            docker build -t divyamoilla/hello-world:latest .
       - run:
           name: Archive Docker image
-          command: docker save -o image.tar $IMAGE_NAME
+          command: docker save -o image.tar divyamoilla/hello-world
       - persist_to_workspace:
           root: .
           paths:
@@ -34,11 +34,11 @@ jobs:
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
-            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            echo "divya@2662" | docker login -u "divyamoilla" --password-stdin
             IMAGE_TAG="0.0.${CIRCLE_BUILD_NUM}"
-            docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
-            docker push $IMAGE_NAME:latest
-            docker push $IMAGE_NAME:$IMAGE_TAG
+            docker tag divyamoilla/hello-world:latest divyamoilla/hello-world:latest
+            docker push divyamoilla/hello-world:latest
+            docker push divyamoilla/hello-world:latest
   publish-tag:
     executor: docker-publisher
     steps:
@@ -51,8 +51,8 @@ jobs:
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
-            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            echo "divya@2662" | docker login -u "divyamoilla" --password-stdin
             IMAGE_TAG=${CIRCLE_TAG/v/''}
-            docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
-            docker push $IMAGE_NAME:latest
-            docker push $IMAGE_NAME:$IMAGE_TAG
+            docker tag divyamoilla/hello-world:latest divyamoilla/hello-world:latest
+            docker push divyamoilla/hello-world:latest
+            docker push divyamoilla/hello-world:latest
